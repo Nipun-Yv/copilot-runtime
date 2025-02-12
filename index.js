@@ -48,6 +48,6 @@ app.use('/copilotkit', (req, res, next) => {
   })().catch(next);
 });
  
-app.listen(4000, () => {
+app.listen(8080, () => {
   console.log('Listening at /copilotkit endpoint');
 });
