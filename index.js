@@ -6,6 +6,7 @@ import {
   GoogleGenerativeAIAdapter,
 } from '@copilotkit/runtime';
 import { configDotenv } from 'dotenv';
+import cors from 'cors';
 
 configDotenv()
 
@@ -17,10 +18,12 @@ const app = express();
 const serviceAdapter = new OpenAIAdapter({ apiKey: process.env.OPENAI_API_KEY});
  
 app.use(express.json());
+app.use(cors({
+  origin: '*',
+  methods: '*',
+  allowedHeaders: '*'
+}));
 
-app.use('/', (req, res) => {
-  res.send('Hello, World');
-});
 
 app.use('/health', (req, res) => {
   res.send('Service is up and running');
