@@ -16,7 +16,7 @@ const app = express();
 //   apiKey: process.env.GOOGLE_API_KEY,
 // });
 const serviceAdapter = new OpenAIAdapter({ apiKey: process.env.OPENAI_API_KEY});
- 
+const port=process.env.PORT|4000
 app.use(express.json());
 app.use(cors({
   origin: '*',
@@ -24,10 +24,6 @@ app.use(cors({
   allowedHeaders: '*'
 }));
 
-
-app.use('/health', (req, res) => {
-  res.send('Service is up and running');
-});
 app.use('/copilotkit', (req, res, next) => {
   (async () => {
     const runtime = new CopilotRuntime(
@@ -47,7 +43,9 @@ app.use('/copilotkit', (req, res, next) => {
     return handler(req, res);
   })().catch(next);
 });
- 
-app.listen(8080, () => {
+app.get('/health', (req, res) => {
+  res.send('Service is up and running');
+});
+app.listen(port, () => {
   console.log('Listening at /copilotkit endpoint');
 });
